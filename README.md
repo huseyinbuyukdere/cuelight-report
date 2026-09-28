@@ -20,7 +20,7 @@ what. Nobody needs GitHub access to press a button.
 - [See the loop in the demo](https://cuelight.netlify.app/demo)
 - [Build an action and its workflow YAML](https://cuelight.netlify.app/builder)
 - [Get Cuelight on the Atlassian Marketplace](https://marketplace.atlassian.com/apps/4069113941)
-  (30-day free trial)
+  (free for up to 10 users)
 
 ## Report a run started by Cuelight
 
