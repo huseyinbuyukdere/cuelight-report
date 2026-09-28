@@ -1,7 +1,26 @@
-# huseyinbuyukdere/cuelight-report
+# Cuelight report: GitHub Actions results and next steps on Jira tickets
 
-Hands a workflow's result and next steps back to the Jira work item that started it, or offers a
-next step on any work item from another workflow (for example when a pull request opens).
+**Your workflow just finished. What's next?**
+
+This action writes a GitHub Actions run's result back to the Jira work item that started it, and
+hands over the next step as a button on that work item: Promote to production after a staging
+deploy, Roll back after a failed smoke test, Deploy preview after a pull request opens.
+
+```
+Jira ticket SHOP-142                        Next steps
+  ✔ Deploy to staging passed · View run     [ Promote to production ]  release managers
+                                            [ Roll back staging ]      developers
+```
+
+It's the reporting half of [Cuelight for Jira](https://cuelight.netlify.app), a Jira Cloud app that
+puts buttons on work items to run GitHub Actions workflows. Developers own the workflows; QA,
+product managers and release managers run them from Jira, and Jira groups decide who can press
+what. Nobody needs GitHub access to press a button.
+
+- [See the loop in the demo](https://cuelight.netlify.app/demo)
+- [Build an action and its workflow YAML](https://cuelight.netlify.app/builder)
+- [Get Cuelight on the Atlassian Marketplace](https://marketplace.atlassian.com/apps/4069113941)
+  (30-day free trial)
 
 ## Report a run started by Cuelight
 
@@ -83,3 +102,13 @@ people. Never put them straight into a `run:` script with `${{ inputs.reason }}`
 Cuelight strips control characters and limits lengths, but it can't know how your script uses a
 value. See GitHub's
 [security hardening guide](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions#understanding-the-risk-of-script-injections).
+
+## Learn more
+
+- [Report API](https://cuelight.netlify.app/docs/report-api): the HTTP calls behind this action, for
+  tools other than GitHub Actions
+- [Workflow patterns](https://cuelight.netlify.app/docs/workflow-patterns): deploy, promote and roll
+  back; approve after an AI agent's pull request
+- [Why Cuelight](https://cuelight.netlify.app/why): compared with Jira Automation web requests and
+  other options
+- Support: huseyinbuyukdere95@gmail.com
