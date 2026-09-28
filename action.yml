@@ -1,0 +1,75 @@
+name: Cuelight report
+description: Hand a run's result and next steps back to the Jira work item, or offer a next step.
+author: Cuelight
+branding:
+  icon: check-circle
+  color: orange
+inputs:
+  status:
+    description: running, success, failure or cancelled. Usually the job status (job.status). Not used for offers.
+    required: false
+    default: ''
+  message:
+    description: Plain-text message shown on the work item (max 500 characters).
+    required: false
+    default: ''
+  next:
+    description: Next steps. Comma-separated action ids, or a JSON array like [{"action":"deploy","inputs":{"pr":"12"}}].
+    required: false
+    default: ''
+  url:
+    description: Link shown as "View run". Defaults to this workflow run.
+    required: false
+    default: ''
+  callback-url:
+    description: Cuelight report URL. Defaults to the cuelight_callback_url workflow input.
+    required: false
+    default: ${{ github.event.inputs.cuelight_callback_url }}
+  token:
+    description: Run token. Defaults to the cuelight_token workflow input.
+    required: false
+    default: ${{ github.event.inputs.cuelight_token }}
+  install-key:
+    description: Install key from Cuelight settings. When set, the action sends an offer instead of a run report.
+    required: false
+    default: ''
+  issue-key:
+    description: Work item key like SHOP-1. Required for offers.
+    required: false
+    default: ''
+  source:
+    description: Offer only. Short label shown as "Suggested by <source>", like "PR #12" (max 60 characters).
+    required: false
+    default: ''
+  expires-in-hours:
+    description: How long the next steps stay on the work item (1-720). Defaults to 168.
+    required: false
+    default: ''
+  fail-on-error:
+    description: Fail the step when the report can't be delivered. When false, a warning is logged.
+    required: false
+    default: 'false'
+outputs:
+  http-status:
+    description: HTTP status returned by Cuelight, or empty if nothing was sent.
+    value: ${{ steps.report.outputs.http-status }}
+runs:
+  using: composite
+  steps:
+    - id: report
+      shell: bash
+      run: '"$GITHUB_ACTION_PATH/report.sh"'
+      env:
+        CUELIGHT_STATUS: ${{ inputs.status }}
+        CUELIGHT_MESSAGE: ${{ inputs.message }}
+        CUELIGHT_NEXT: ${{ inputs.next }}
+        CUELIGHT_URL: ${{ inputs.url }}
+        CUELIGHT_DEFAULT_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        CUELIGHT_CALLBACK_URL: ${{ inputs.callback-url }}
+        CUELIGHT_REPORT_URL: ${{ env.CUELIGHT_REPORT_URL }}
+        CUELIGHT_TOKEN: ${{ inputs.token }}
+        CUELIGHT_INSTALL_KEY: ${{ inputs.install-key }}
+        CUELIGHT_ISSUE_KEY: ${{ inputs.issue-key }}
+        CUELIGHT_SOURCE: ${{ inputs.source }}
+        CUELIGHT_EXPIRES_IN_HOURS: ${{ inputs.expires-in-hours }}
+        CUELIGHT_FAIL_ON_ERROR: ${{ inputs.fail-on-error }}
