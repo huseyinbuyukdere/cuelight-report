@@ -111,4 +111,4 @@ value. See GitHub's
   back; approve after an AI agent's pull request
 - [Why Cuelight](https://cuelight.netlify.app/why): compared with Jira Automation web requests and
   other options
-- Support: huseyinbuyukdere95@gmail.com
+- Support: cuelight@ryzaworks.com
